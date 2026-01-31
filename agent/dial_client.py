@@ -4,8 +4,8 @@ from typing import Any
 
 from openai import AsyncAzureOpenAI
 
-from agent.models.message import Message, Role
-from agent.mcp_client import MCPClient
+from models.message import Message, Role
+from mcp_client import MCPClient
 
 
 class DialClient:
