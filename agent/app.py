@@ -44,8 +44,12 @@ async def main():
         for tool in tools:
             print(json.dumps(tool, indent=2))
 
+        api_key = os.getenv("DIAL_API_KEY")
+        if not api_key:
+            raise ValueError("DIAL_API_KEY environment variable is required")
+        
         dial_client = DialClient(
-            api_key=os.getenv("DIAL_API_KEY"),
+            api_key=api_key,
             endpoint="https://ai-proxy.lab.epam.com",
             tools=tools,
             mcp_client=mcp_client,

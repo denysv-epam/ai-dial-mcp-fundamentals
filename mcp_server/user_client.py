@@ -9,7 +9,7 @@ USER_SERVICE_ENDPOINT = os.getenv("USERS_MANAGEMENT_SERVICE_URL", "http://localh
 
 class UserClient:
 
-    def __user_to_string(self, user: dict[str, Any]):
+    def __user_to_string(self, user: dict[str, Any]) -> str:
         user_str = "```\n"
         for key, value in user.items():
             user_str += f"  {key}: {value}\n"
@@ -17,7 +17,7 @@ class UserClient:
 
         return user_str
 
-    def __users_to_string(self, users: list[dict[str, Any]]):
+    def __users_to_string(self, users: list[dict[str, Any]]) -> str:
         users_str = ""
         for value in users:
             users_str += self.__user_to_string(value)

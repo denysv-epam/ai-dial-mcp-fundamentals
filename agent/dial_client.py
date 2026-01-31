@@ -24,7 +24,7 @@ class DialClient:
             api_key=api_key, azure_endpoint=endpoint, api_version="2025-01-01-preview"
         )
 
-    def _collect_tool_calls(self, tool_deltas):
+    def _collect_tool_calls(self, tool_deltas: list[Any]) -> list[dict[str, Any]]:
         """Convert streaming tool call deltas to complete tool calls"""
         tool_dict = defaultdict(
             lambda: {
@@ -95,7 +95,7 @@ class DialClient:
 
         return ai_message
 
-    async def _call_tools(self, ai_message: Message, messages: list[Message]):
+    async def _call_tools(self, ai_message: Message, messages: list[Message]) -> None:
         """Execute tool calls using MCP client"""
         for tool_call in ai_message.tool_calls:
             tool_name = tool_call["function"]["name"]

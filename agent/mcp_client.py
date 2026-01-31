@@ -21,10 +21,10 @@ class MCPClient:
     def __init__(self, mcp_server_url: str) -> None:
         self.mcp_server_url = mcp_server_url
         self.session: Optional[ClientSession] = None
-        self._streams_context = None
-        self._session_context = None
+        self._streams_context: Any = None
+        self._session_context: Any = None
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "MCPClient":
         self._streams_context = streamablehttp_client(self.mcp_server_url)
         read_stream, write_stream, _ = await self._streams_context.__aenter__()
 
@@ -36,7 +36,7 @@ class MCPClient:
 
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         if self.session and self._session_context:
             await self._session_context.__aexit__(exc_type, exc_val, exc_tb)
         if self._streams_context:
@@ -100,7 +100,9 @@ class MCPClient:
         if isinstance(content, TextResourceContents):
             return content.text
         elif isinstance(content, BlobResourceContents):
-            return content.blob
+            return str(content.blob)
+        
+        return ""
 
     async def get_prompts(self) -> list[Prompt]:
         """Get available prompts from MCP server"""
